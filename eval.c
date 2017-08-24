@@ -24,6 +24,21 @@ int		calcul(int op1, char operateur, int op2)
 		return (op1 + op2);
 	if (operateur == '/')
 		return (op1 / op2);
+	return (0);
+}
+
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_display(char *str)
+{
+	int		select;
+
+	select = 0;
+	while (str[select])
+	ft_putchar(str[select]);
 }
 
 char	*ft_strcpy(char *input, int select)
@@ -49,12 +64,26 @@ int		calculsimple(char *input, int select)
 	char	operateur;
 	int		resultat;
 	char	*newput;
-	int		position
+	int		position;
+	int		levier;
+	int		levier2;
 
+	levier = 1;
+	levier2 = 1;
+	op1 = 0;
+	op2 = 0;
 		while (input[select] < 47 || input[select] > 58)
+		{
+			if (input[select] == '-')
+				levier = -1;
 			select++;
-		op1 = input[select];
-		select++;
+		}
+		while (input[select] > 47 && input[select] < 58)
+		{
+			op1 = op1 * 10 + (input[select] - '0');
+			select++;
+		}
+		op1 = op1 * levier;
 		while (input[select] != '\0')
 		{
 			while (input[select] != '%' || input[select] != '*'
@@ -63,15 +92,25 @@ int		calculsimple(char *input, int select)
 				select++;
 			operateur = input[select];
 			while (input[select] < 47 || input[select] > 58)
+			{
+				if (input[select] == '-')
+					levier2 = -1;
+					select++;
+			}
+			while (input[select] > 47 && input[select] < 58)
+			{
+				op2 = op2 * 10 + (input[select] - '0');
 				select++;
-			op2 = input[select];
+			}
+			op2 = op2 * levier;
 			position = select;
 			resultat = calcul(op1, operateur, op2);
 			op1 = resultat;
-			*newput = malloc(sizeof char * ft_strlen(position, input));
-			*newput = ft_strcpy(input, select)
+			newput = malloc(sizeof(char) * ft_strlen(position, input));
+			newput = ft_strcpy(input, select);
 		}
-		select 
+		ft_display(newput);
+		return (0);
 }
 
 int		main(int argc, char **argv)
@@ -93,8 +132,8 @@ int		main(int argc, char **argv)
 	}
 	select = 0;
 	if (parentheses < 1)
-		calculsimple();
+		calculsimple(input, select);
 	else
 		return (0);
-	return ;
+	return (0);
 	}
